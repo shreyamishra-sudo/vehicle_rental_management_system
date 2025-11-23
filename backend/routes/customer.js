@@ -6,12 +6,13 @@ const pool = require('../config/database');
 // Customer Registration
 router.post('/register', async (req, res) => {
   try {
-    const { first_name, last_name, email, phone, password, address } = req.body;
+    const { first_name, last_name, email, phone, password, address, driver_license_number } = req.body;
 
     // Validation
-    if (!first_name || !last_name || !email || !password) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    if (!first_name || !last_name || !email || !password || !driver_license_number) {
+    return res.status(400).json({ error: 'Missing required fields' });
+}
+
 
     // Check if email already exists
     const [existing] = await pool.execute(
@@ -29,10 +30,18 @@ router.post('/register', async (req, res) => {
 
     // Insert customer
     const [result] = await pool.execute(
-      `INSERT INTO Customers (first_name, last_name, email, phone, password_hash, address)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [first_name, last_name, email, phone || null, password_hash, address || null]
-    );
+  `INSERT INTO Customers (first_name, last_name, email, phone, password_hash, address, driver_license_number)
+   VALUES (?, ?, ?, ?, ?, ?, ?)`,
+  [
+    first_name,
+    last_name,
+    email,
+    phone || null,
+    password_hash,
+    address || null,
+    driver_license_number
+  ]
+);
 
     res.status(201).json({
       message: 'Customer registered successfully',

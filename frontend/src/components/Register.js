@@ -4,13 +4,15 @@ import api from '../config/api';
 
 function Register() {
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    password: '',
-    address: ''
-  });
+  first_name: '',
+  last_name: '',
+  email: '',
+  phone: '',
+  password: '',
+  address: '',
+  driver_license_number: ''   // ← ADD THIS
+});
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -105,6 +107,21 @@ function Register() {
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Driver License Number *
+              </label>
+              <input
+                type="text"
+                name="driver_license_number"
+                value={formData.driver_license_number}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                          focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
+
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
