@@ -161,10 +161,11 @@ router.put('/return/:rentalId', async (req, res) => {
 
     // Insert payment record
     await connection.execute(
-      `INSERT INTO Payments (rental_id, amount, payment_method, status)
-       VALUES (?, ?, 'Credit Card', 'Completed')`,
-      [rentalId, finalAmount]
-    );
+  `INSERT INTO Payments (rental_id, payment_date, amount, payment_method)
+   VALUES (?, NOW(), ?, ?)`,
+  [rentalId, finalAmount, 'Credit Card']
+);
+
 
     await connection.commit();
 
@@ -233,4 +234,3 @@ router.get('/:id', async (req, res) => {
 });
 
 module.exports = router;
-
