@@ -27,6 +27,8 @@ function Login() {
       const response = await api.post('/customer/login', formData);
       // Store customer info in localStorage
       localStorage.setItem('customer', JSON.stringify(response.data.customer));
+window.dispatchEvent(new Event("customer-updated"));
+
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
